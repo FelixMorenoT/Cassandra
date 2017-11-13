@@ -8,9 +8,9 @@ public class App {
 	    Conexion client = new Conexion();
 	    client.connect("127.0.0.1");
 	    //client.createSchema("db1");
-	    //client.consultingAll();
+	    client.consultingAll("basebosque","datosbosque");
 	 
-	    client.deleteKeySpace("db1");
+	    //client.deleteKeySpace("db1");
 	}
 
 }

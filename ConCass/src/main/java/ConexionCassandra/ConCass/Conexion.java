@@ -37,21 +37,24 @@ public class Conexion {
 		try {
 			String keySpace = "CREATE KEYSPACE "+nameKeySpace+" WITH replication = {'class':'SimpleStrategy', 'replication_factor':2};";
 		    session.execute(keySpace);
-		    System.out.println("Creado");
+		    System.out.println("KeySpace Creada.");
 		} catch (Exception e) {
 			System.out.println("KeySpace '"+nameKeySpace+"' , ya existe.");
 		}
-			/*String keySpace = "CREATE KEYSPACE "+nameKeySpace+" WITH replication = {'class':'SimpleStrategy', 'replication_factor':2};";
-		    session.execute(keySpace);
+
 		    
-		    ksmd= metadata.getKeyspace(nameKeySpace);
+		    /*ksmd= metadata.getKeyspace(nameKeySpace);
 
 		    String colunmFamily ="CREATE COLUMNFAMILY simplex.songs (id uuid PRIMARY KEY,title text,album text,artist text, tags set<text>,data blob);";
 		    session.execute(colunmFamily);*/
 	}
 	
-	public void consultingAll() {
-		String queryConsulting = "SELECT * FROM basebosque.datosbosque";
+	public void createColunmFamily() {
+		
+	}
+	
+	public void consultingAll(String nameKeySpace,String tableName) {
+		String queryConsulting = "SELECT * FROM "+nameKeySpace+"."+tableName+";";
 		ResultSet results= session.execute(queryConsulting);
 		
 		for(Row r:results.all()){
@@ -71,7 +74,7 @@ public class Conexion {
 		try {
 			String queryDelete = "DROP KEYSPACE "+nameKeySpace +";";
 			session.execute(queryDelete);
-			System.out.println("Eliminado");
+			System.out.println("KeySpace Eliminada.");
 		} catch (Exception e) {
 			//System.out.println(e);
 
