@@ -34,7 +34,17 @@ public class Conexion {
 	    System.out.println("KeySpace: " + ksmd +"\n");
 	}
 	
-	public void consulting() {
+	public void createSchema() {
+		String keySpace = "CREATE KEYSPACE simplex WITH replication = {'class':'SimpleStrategy', 'replication_factor':2};";
+	    session.execute(keySpace);
+
+	    String colunmFamily ="CREATE COLUMNFAMILY simplex.songs (id uuid PRIMARY KEY,title text,album text,artist text, tags set<text>,data blob);";
+	    session.execute(colunmFamily);
+	    
+
+	}
+	
+	public void consultingAll() {
 		String queryConsulting = "SELECT * FROM basebosque.datosbosque";
 		ResultSet results= session.execute(queryConsulting);
 		
