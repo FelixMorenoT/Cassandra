@@ -7,8 +7,10 @@ public class App {
 	public static void main(String[] args) {
 	    Conexion client = new Conexion();
 	    client.connect("127.0.0.1");
-	    client.createSchema();
+	    //client.createSchema("db1");
 	    //client.consultingAll();
+	 
+	    client.deleteKeySpace("db1");
 	}
 
 }

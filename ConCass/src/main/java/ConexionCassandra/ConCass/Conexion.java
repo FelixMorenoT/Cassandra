@@ -16,12 +16,11 @@ public class Conexion {
 	private Session session;
 	private KeyspaceMetadata ksmd;
 	private Cluster cluster;
+	private Metadata metadata;
 
 	public void connect(String node) {
 	    cluster = Cluster.builder().addContactPoint(node).build();
-	    Metadata metadata = cluster.getMetadata();
-	    
-	    ksmd =  metadata.getKeyspace("basebosque");
+	    metadata = cluster.getMetadata();
 	    
 	    System.out.println("Cassandra connection established");
 	    System.out.printf("Connected to cluster: %s\n", metadata.getClusterName());
@@ -31,17 +30,24 @@ public class Conexion {
 	        		session = cluster.connect();
 
 	    }
-	    System.out.println("KeySpace: " + ksmd +"\n");
 	}
 	
-	public void createSchema() {
-		String keySpace = "CREATE KEYSPACE simplex WITH replication = {'class':'SimpleStrategy', 'replication_factor':2};";
-	    session.execute(keySpace);
+	public void createSchema(String nameKeySpace) {
+			
+		try {
+			String keySpace = "CREATE KEYSPACE "+nameKeySpace+" WITH replication = {'class':'SimpleStrategy', 'replication_factor':2};";
+		    session.execute(keySpace);
+		    System.out.println("Creado");
+		} catch (Exception e) {
+			System.out.println("KeySpace '"+nameKeySpace+"' , ya existe.");
+		}
+			/*String keySpace = "CREATE KEYSPACE "+nameKeySpace+" WITH replication = {'class':'SimpleStrategy', 'replication_factor':2};";
+		    session.execute(keySpace);
+		    
+		    ksmd= metadata.getKeyspace(nameKeySpace);
 
-	    String colunmFamily ="CREATE COLUMNFAMILY simplex.songs (id uuid PRIMARY KEY,title text,album text,artist text, tags set<text>,data blob);";
-	    session.execute(colunmFamily);
-	    
-
+		    String colunmFamily ="CREATE COLUMNFAMILY simplex.songs (id uuid PRIMARY KEY,title text,album text,artist text, tags set<text>,data blob);";
+		    session.execute(colunmFamily);*/
 	}
 	
 	public void consultingAll() {
@@ -53,7 +59,24 @@ public class Conexion {
 		}
 	}
 	
+	public void consultingEspecific() {
+		
+	}
+	
 	public void dataLoad() {
 		
+	}
+	
+	public void deleteKeySpace(String nameKeySpace) {
+		try {
+			String queryDelete = "DROP KEYSPACE "+nameKeySpace +";";
+			session.execute(queryDelete);
+			System.out.println("Eliminado");
+		} catch (Exception e) {
+			//System.out.println(e);
+
+		}
+
+
 	}
 }
