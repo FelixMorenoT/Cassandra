@@ -35,11 +35,15 @@ public class Conexion {
 	}
 	
 	public void consulting() {
-		String queryConsulting = "SELECT * FROM basebosque.datosbosque where id=1";
+		String queryConsulting = "SELECT * FROM basebosque.datosbosque";
 		ResultSet results= session.execute(queryConsulting);
 		
 		for(Row r:results.all()){
 		    System.out.println(r.toString());
 		}
+	}
+	
+	public void dataLoad() {
+		
 	}
 }
