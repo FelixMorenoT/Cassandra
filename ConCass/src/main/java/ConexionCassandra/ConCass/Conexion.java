@@ -35,7 +35,7 @@ public class Conexion {
 	public void createSchema(String nameKeySpace) {
 			
 		try {
-			String keySpace = "CREATE KEYSPACE "+nameKeySpace+" WITH replication = {'class':'SimpleStrategy', 'replication_factor':2};";
+			String keySpace = "CREATE KEYSPACE "+nameKeySpace+" WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};";
 		    session.execute(keySpace);
 		    System.out.println("KeySpace Creada.");
 		} catch (Exception e) {
